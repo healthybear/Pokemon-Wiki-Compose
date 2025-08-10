@@ -177,6 +177,54 @@ implementation(libs.mmkv)
 - 遵循SOLID原则
 - 提高代码可测试性
 
+### Context7 MCP服务使用规则
+- **优先使用Context7**: 当需要查询库文档、API参考或技术信息时，优先使用Context7 MCP服务
+- **库文档查询**: 使用Context7获取最新的库文档，确保代码使用正确的API和最佳实践
+- **版本兼容性**: 通过Context7查询库的版本兼容性信息，确保与项目依赖版本匹配
+- **API参考**: 使用Context7获取详细的API文档，包括参数说明、返回值、使用示例等
+- **最佳实践**: 通过Context7查询库的官方推荐用法和最佳实践指南
+- **错误解决**: 使用Context7查询常见问题和解决方案，快速解决开发中遇到的问题
+
+### 口袋妖怪主题配色方案使用规则
+- **主题色彩系统**: 使用项目自定义的口袋妖怪主题色彩系统，包括核心色彩、类型色彩和状态色彩
+- **色彩文件位置**: 所有主题相关色彩定义在 `app/src/main/java/com/healthybear/pokemon/wiki/ui/theme/Color.kt` 中
+- **主题配置**: 主题配置和状态管理在 `app/src/main/java/com/healthybear/pokemon/wiki/ui/theme/Theme.kt` 中
+- **主题切换组件**: 使用 `app/src/main/java/com/healthybear/pokemon/wiki/ui/theme/ThemeSwitcher.kt` 中的主题切换UI组件
+- **主题数据结构**: 主题相关数据结构定义在 `app/src/main/java/com/healthybear/pokemon/wiki/ui/theme/ThemeData.kt` 中
+- **色彩使用原则**:
+  - 主要UI元素使用 `PokemonPrimary` (皮卡丘金)
+  - 次要UI元素使用 `PokemonSecondary` (妙蛙绿)
+  - 强调色使用 `PokemonAccent` (小火龙橙)
+  - 宝可梦类型相关UI使用对应的类型色彩
+  - 状态指示使用 `PokemonSuccess`、`PokemonWarning`、`PokemonError` 等状态色彩
+- **主题模式支持**: 支持 LIGHT、DARK、SYSTEM、AUTO 四种主题模式
+- **动态色彩**: 在Android 12+设备上支持动态色彩，同时保持口袋妖怪主题特色
+- **无障碍设计**: 确保所有色彩组合满足无障碍对比度要求
+
+### 宝可梦动态配色系统使用规则
+- **动态配色生成器**: 使用 `PokemonDynamicColorGenerator` 对象根据宝可梦类型自动生成配色方案
+- **配色优先级**: 宝可梦动态配色 > 系统动态配色 > 静态配色回退
+- **宝可梦类型选择**: 使用 `PokemonTypeSelector` 组件让用户选择宝可梦类型
+- **动态配色控制**: 使用 `PokemonDynamicColorSwitch` 组件控制是否启用动态配色
+- **主题状态管理**: 通过 `PokemonThemeState` 对象管理当前主题、选择的宝可梦类型和动态配色开关状态
+- **HSL色彩科学**: 系统使用HSL色彩空间进行智能色彩搭配和互补色计算
+- **色彩混合算法**: 使用 `Color.blendWith()` 扩展函数进行色彩混合，生成背景和表面色彩
+- **主题预览**: 使用 `PokemonEnhancedThemePreviewCard` 组件预览不同主题和宝可梦类型的配色效果
+- **综合控制面板**: 使用 `PokemonThemeControlPanel` 组件提供完整的主题控制功能
+- **宝可梦类型支持**: 支持18种宝可梦类型，包括火、水、草、电、冰、格斗、毒、地面、飞行、超能、虫、岩石、幽灵、龙、恶、钢、妖精、一般
+- **色彩生成算法**: 
+  - 主色调基于选择的宝可梦类型
+  - 次要色调为主色调的变体（透明度调节）
+  - 第三色调为主色调的互补色（HSL色相旋转180度）
+  - 背景色为主色调与黑白的基础色混合
+- **性能优化**: 使用 `mutableStateOf` 确保响应式更新，避免不必要的色彩重新计算
+
+### 项目文档管理规则
+- **根目录README.md**: 项目根目录的 `README.md` 是整个工程的文档入口，必须保持最新和完整
+- **文档更新同步**: 当生成、删除或更新其他markdown文件时，必须同步更新根目录的 `README.md`
+- **文档结构**: 根目录 `README.md` 应包含项目概述、技术架构、快速开始、开发指南、文档导航等核心信息
+- **文档维护**: 所有新增的文档功能、组件或模块都应在根目录 `README.md` 中有所体现
+
 ## 项目特定规则
 
 ### Pokemon Wiki 功能
