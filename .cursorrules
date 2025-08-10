@@ -1,0 +1,198 @@
+# Pokemon Wiki Android 项目开发规则
+
+## 项目基本信息
+- **项目名称**: Pokemon Wiki
+- **包名**: `com.healthybear.pokemon.wiki`
+- **最低SDK**: API 24 (Android 7.0)
+- **目标SDK**: API 36 (Android 14)
+- **编译SDK**: API 36
+- **Java版本**: 11
+- **Kotlin版本**: 2.0.21
+- **AGP版本**: 8.11.1
+
+## 技术架构规范
+
+### UI框架
+- **主要UI框架**: Jetpack Compose
+- **主题**: Material3
+- **支持特性**: 
+  - Data Binding
+  - View Binding
+  - Edge-to-Edge支持
+
+### 网络层架构
+- **HTTP客户端**: Retrofit 3.0.0 + OkHttp 5.0.0
+- **数据序列化**: Moshi (JSON)
+- **网络拦截器**: OkHttp Logging Interceptor
+- **错误处理**: 自定义异常处理机制
+
+### 数据存储
+- **键值存储**: MMKV (腾讯开源)
+- **会话管理**: 自定义SessionStorage
+
+### 图片加载
+- **主要**: Coil 2.7.0
+- **支持格式**: GIF, SVG, Video
+- **备选**: Glide 4.16.0
+
+## 代码规范
+
+### 包结构
+```
+com.healthybear.pokemon.wiki/
+├── App.kt                    # 应用程序入口
+├── MainActivity.kt           # 主活动
+├── mmkv/                     # 数据存储
+├── network/                  # 网络层
+│   ├── constant/            # 网络常量
+│   ├── error/               # 错误处理
+│   ├── manager/             # 网络管理
+│   ├── repository/          # 数据仓库
+│   └── response/            # 响应模型
+└── ui/                      # 用户界面
+    └── theme/               # 主题相关
+```
+
+### 命名规范
+- **类名**: PascalCase (如: `MainActivity`, `SessionStorage`)
+- **函数名**: camelCase (如: `onCreate`, `enableEdgeToEdge`)
+- **常量**: UPPER_SNAKE_CASE (如: `INTERNET`, `ACCESS_NETWORK_STATE`)
+- **包名**: 全小写，点分隔 (如: `com.healthybear.pokemon.wiki`)
+
+### 权限管理
+- **网络权限**: `INTERNET`, `ACCESS_NETWORK_STATE`, `ACCESS_WIFI_STATE`
+- **权限申请**: 在AndroidManifest.xml中声明
+
+## 依赖管理规范
+
+### 版本管理
+- 使用`gradle/libs.versions.toml`统一管理版本
+- 版本号格式: `major.minor.patch`
+- 关键依赖版本锁定
+
+### 核心依赖
+```kotlin
+// 基础框架
+implementation(libs.androidx.core.ktx)
+implementation(libs.androidx.lifecycle.runtime.ktx)
+
+// Compose相关
+implementation(libs.androidx.activity.compose)
+implementation(platform(libs.androidx.compose.bom))
+
+// 网络相关
+implementation(libs.retrofit)
+implementation(libs.okhttp)
+implementation(libs.moshi)
+
+// 工具库
+implementation(libs.utilcodex)
+implementation(libs.mmkv)
+```
+
+## 开发流程规范
+
+### 代码提交
+- 使用Git进行版本控制
+- 提交信息格式: `type: description`
+- 类型包括: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+
+### 测试规范
+- 单元测试: JUnit 4
+- 集成测试: AndroidX Test
+- UI测试: Espresso + Compose Testing
+
+### 构建配置
+- 发布版本: 启用代码混淆
+- 调试版本: 保留调试信息
+- 使用ProGuard规则优化
+
+## 性能优化规范
+
+### 内存管理
+- 使用MMKV进行高效数据存储
+- 图片加载使用Coil，支持内存缓存
+- 及时释放不需要的资源
+
+### 网络优化
+- 使用Retrofit进行网络请求
+- 实现请求拦截器和响应缓存
+- 错误重试机制
+
+### UI性能
+- 使用Compose进行声明式UI开发
+- 避免过度绘制
+- 使用LazyColumn等懒加载组件
+
+## 安全规范
+
+### 数据安全
+- 敏感数据使用MMKV加密存储
+- 网络请求使用HTTPS
+- 避免在代码中硬编码敏感信息
+
+### 权限安全
+- 最小权限原则
+- 运行时权限检查
+- 用户隐私保护
+
+## 错误处理规范
+
+### 异常处理
+- 网络异常: 自定义ApiException
+- 业务异常: 自定义CusError
+- 全局异常: ExceptionHandler统一处理
+
+### 日志记录
+- 使用Logging Interceptor记录网络请求
+- 关键操作记录日志
+- 生产环境关闭调试日志
+
+## 文档规范
+
+### 代码注释
+- 公共API必须添加文档注释
+- 复杂逻辑添加行内注释
+- 使用KDoc格式
+
+### 架构文档
+- 网络层架构图
+- 数据流图
+- API接口文档
+
+## Cursor AI 助手使用规则
+
+### 代码生成
+- 优先使用Kotlin语言
+- 遵循Jetpack Compose最佳实践
+- 使用项目现有的架构模式
+
+### 代码审查
+- 检查是否符合项目命名规范
+- 验证依赖使用是否正确
+- 确保错误处理机制完善
+
+### 重构建议
+- 保持代码结构清晰
+- 遵循SOLID原则
+- 提高代码可测试性
+
+## 项目特定规则
+
+### Pokemon Wiki 功能
+- 实现宝可梦图鉴功能
+- 支持网络数据获取
+- 本地数据缓存
+- 响应式UI设计
+
+### 技术栈要求
+- 必须使用Jetpack Compose
+- 网络层使用Retrofit + Moshi
+- 数据存储使用MMKV
+- 图片加载使用Coil
+
+### 代码质量
+- 代码覆盖率 > 80%
+- 无内存泄漏
+- 网络请求有重试机制
+- 错误处理完善
