@@ -2,16 +2,17 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.healthybear.pokemon.wiki"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.healthybear.pokemon.wiki"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -36,6 +37,8 @@ android {
     }
     buildFeatures {
         compose = true
+        dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -56,4 +59,41 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.gson)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.adapters)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.logging.interceptor)
+    implementation(libs.moshi)
+    implementation(libs.moshi.adapters)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.coil)
+    implementation(libs.coil.gif)
+    implementation(libs.coil.svg)
+    implementation(libs.coil.video)
+    implementation(libs.core)
+    implementation(libs.color)
+    implementation(libs.input)
+    implementation(libs.files)
+    implementation(libs.datetime)
+    implementation(libs.bottomsheets)
+    implementation(libs.lifecycle)
+
+    // https://github.com/Justson/AgentWeb  好用的webview
+    // https://blog.csdn.net/gitblog_07337/article/details/142232504
+    implementation(libs.agentweb.core)
+    implementation(libs.agentweb.filechooser)
+    implementation(libs.justson.downloader)
+
+    ksp(libs.moshi.kotlin.codegen)
+    implementation(libs.okhttp)
+    implementation(libs.eventbus)
+    implementation(libs.glide)
+    ksp(libs.glide.compiler)
+    implementation(libs.lottie)
+    implementation(libs.crashreport)
+    implementation(libs.utilcodex)
+    implementation(libs.mmkv)
+    implementation(libs.dialogx)
 }

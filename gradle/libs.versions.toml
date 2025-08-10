@@ -1,4 +1,8 @@
 [versions]
+compileSdk = "36"
+minSdk = "24"
+targetSdk = "36"
+
 agp = "8.11.1"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
@@ -8,6 +12,50 @@ espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.9.2"
 activityCompose = "1.10.1"
 composeBom = "2024.09.00"
+appcompat = "1.6.1"
+material = "1.10.0"
+retrofit = "3.0.0"
+retrofitAdapters = "2.8.1"
+retrofitConverterMoshi = "3.0.0"
+loggingInterceptor = "5.0.0-alpha.16"
+moshi = "1.15.2"
+moshiAdapters = "1.15.2"
+moshiKotlin = "1.15.2"
+moshiKotlinCodegen = "1.15.2"
+okhttp = "5.0.0-alpha.16"
+ksp = "2.0.21-1.0.25"
+viewpager2 = "1.1.0-beta01"
+recyclerview = "1.3.0"
+materialVersion = "1.12.0"
+legacySupportV4 = "1.0.0"
+lifecycleLivedataKtx = "2.6.1"
+lifecycleViewmodelKtx = "2.6.1"
+fragmentKtx = "1.5.6"
+annotation = "1.6.0"
+constraintlayoutVersion = "2.1.4"
+eventbus = "3.3.1"
+glide = "4.16.0"
+lottie = "6.6.6"
+crashreport = "4.1.9.3"
+utilcodex = "1.31.1"
+mmkv = "2.2.2"
+coil = "2.7.0"
+coilGif = "2.7.0"
+coilSvg = "2.7.0"
+coilVideo = "2.7.0"
+core = "3.3.0"
+color = "3.3.0"
+input = "3.3.0"
+files = "3.3.0"
+datetime = "3.3.0"
+bottomsheets = "3.3.0"
+lifecycle = "3.3.0"
+activity = "1.10.1"
+agentwebCore = "v5.1.1-androidx"
+agentwebFilechooser = "v5.1.1-androidx"
+justsonDownloader = "v5.0.4-androidx"
+gson = "2.13.1"
+dialogx = "0.0.49"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -24,9 +72,55 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-adapters = { group = "com.squareup.retrofit2", name = "retrofit-adapters", version.ref = "retrofitAdapters" }
+retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitConverterMoshi" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
+moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
+moshi-adapters = { group = "com.squareup.moshi", name = "moshi-adapters", version.ref = "moshiAdapters" }
+moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshiKotlin" }
+moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiKotlinCodegen" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayoutVersion" }
+eventbus = { group = "org.greenrobot", name = "eventbus", version.ref = "eventbus" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+crashreport = { group = "com.tencent.bugly", name = "crashreport", version.ref = "crashreport" }
+utilcodex = { group = "com.blankj", name = "utilcodex", version.ref = "utilcodex" }
+mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
+coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+coil-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coilGif" }
+coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coilSvg" }
+coil-video = { group = "io.coil-kt", name = "coil-video", version.ref = "coilVideo" }
+core = { group = "com.afollestad.material-dialogs", name = "core", version.ref = "core" }
+color = { group = "com.afollestad.material-dialogs", name = "color", version.ref = "color" }
+input = { group = "com.afollestad.material-dialogs", name = "input", version.ref = "input" }
+files = { group = "com.afollestad.material-dialogs", name = "files", version.ref = "files" }
+datetime = { group = "com.afollestad.material-dialogs", name = "datetime", version.ref = "datetime" }
+bottomsheets = { group = "com.afollestad.material-dialogs", name = "bottomsheets", version.ref = "bottomsheets" }
+lifecycle = { group = "com.afollestad.material-dialogs", name = "lifecycle", version.ref = "lifecycle" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+agentweb-core = { group = "io.github.justson", name = "agentweb-core", version.ref = "agentwebCore" }
+agentweb-filechooser = { group = "io.github.justson", name = "agentweb-filechooser", version.ref = "agentwebFilechooser" }
+justson-downloader = { group = "com.github.Justson", name = "Downloader", version.ref = "justsonDownloader" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+dialogx = { group = "com.github.kongzue.DialogX", name = "DialogX", version.ref = "dialogx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
