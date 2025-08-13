@@ -14,7 +14,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -22,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import kotlin.math.abs
+import androidx.compose.runtime.State
 
 // ===== 口袋妖怪亮色主题 =====
 private val PokemonLightColorScheme = lightColorScheme(
@@ -404,10 +404,10 @@ fun PokemonWiki_ComposeTheme(
     val context = LocalContext.current
     val view = LocalView.current
     
-    // 使用 remember 来监听主题状态变化，确保 Compose 重组
-    val currentTheme by remember { PokemonThemeState.currentTheme }
-    val selectedPokemonType by remember { PokemonThemeState.selectedPokemonType }
-    val useDynamicColors by remember { PokemonThemeState.useDynamicColors }
+    // 使用 by 委托来监听主题状态变化，确保 Compose 重组
+    val currentTheme by PokemonThemeState.currentTheme
+    val selectedPokemonType by PokemonThemeState.selectedPokemonType
+    val useDynamicColors by PokemonThemeState.useDynamicColors
     
     // 根据主题状态决定是否使用暗色主题
     val shouldUseDarkTheme = when (currentTheme) {
@@ -457,12 +457,7 @@ fun PokemonWiki_ComposeTheme(
 fun PokemonThemeProvider(
     content: @Composable () -> Unit
 ) {
-    var currentTheme by remember { mutableStateOf(PokemonThemeState.currentTheme) }
-    
-    // 监听主题变化
-    SideEffect {
-        PokemonThemeState.currentTheme = currentTheme
-    }
+    val currentTheme by PokemonThemeState.currentTheme
     
     CompositionLocalProvider(
         LocalPokemonTheme provides currentTheme
@@ -479,12 +474,14 @@ val LocalPokemonTheme = androidx.compose.runtime.staticCompositionLocalOf<Pokemo
 // ===== 主题工具函数 =====
 @Composable
 fun rememberPokemonTheme(): PokemonThemeMode {
-    return PokemonThemeState.currentTheme.value
+    val currentTheme by PokemonThemeState.currentTheme
+    return currentTheme
 }
 
 @Composable
 fun isPokemonDarkTheme(): Boolean {
-    return when (PokemonThemeState.currentTheme.value) {
+    val currentTheme by PokemonThemeState.currentTheme
+    return when (currentTheme) {
         PokemonThemeMode.LIGHT -> false
         PokemonThemeMode.DARK -> true
         PokemonThemeMode.SYSTEM -> isSystemInDarkTheme()

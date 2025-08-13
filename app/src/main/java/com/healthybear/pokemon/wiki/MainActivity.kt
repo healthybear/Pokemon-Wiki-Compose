@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.healthybear.pokemon.wiki.ui.theme.*
 
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokemonThemeDemo() {
@@ -104,8 +106,8 @@ fun PokemonThemeDemo() {
 @Composable
 fun CurrentThemeStatus() {
     val currentTheme = rememberPokemonTheme()
-    val selectedType = PokemonThemeState.selectedPokemonType.value
-    val useDynamicColors = PokemonThemeState.useDynamicColors.value
+    val selectedType by PokemonThemeState.selectedPokemonType
+    val useDynamicColors by PokemonThemeState.useDynamicColors
     
     // 获取当前颜色方案
     val colorScheme = MaterialTheme.colorScheme
@@ -148,7 +150,7 @@ fun CurrentThemeStatus() {
             ) {
                 Text("宝可梦类型:")
                 Text(
-                    text = selectedType?.let { "🎯 ${getPokemonTypeDisplayName(it)}" } ?: "未选择",
+                    text = selectedType?.let { type -> "🎯 ${getPokemonTypeDisplayName(type)}" } ?: "未选择",
                     fontWeight = FontWeight.Medium
                 )
             }
@@ -169,6 +171,8 @@ fun CurrentThemeStatus() {
 
 @Composable
 fun ThemePreviewCards() {
+    val selectedType by PokemonThemeState.selectedPokemonType
+    
     Text(
         text = "主题预览",
         style = MaterialTheme.typography.titleMedium,
@@ -181,13 +185,13 @@ fun ThemePreviewCards() {
     ) {
         PokemonEnhancedThemePreviewCard(
             theme = PokemonThemeMode.LIGHT,
-            pokemonType = PokemonThemeState.selectedPokemonType.value,
+            pokemonType = selectedType,
             modifier = Modifier.weight(1f)
         )
         
         PokemonEnhancedThemePreviewCard(
             theme = PokemonThemeMode.DARK,
-            pokemonType = PokemonThemeState.selectedPokemonType.value,
+            pokemonType = selectedType,
             modifier = Modifier.weight(1f)
         )
     }

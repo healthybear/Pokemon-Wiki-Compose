@@ -334,7 +334,7 @@ fun PokemonTypeSelector(
     onPokemonTypeSelected: (String?) -> Unit = {}
 ) {
     var showTypeDialog by remember { mutableStateOf(false) }
-    val currentType = PokemonThemeState.selectedPokemonType.value
+    val currentType by PokemonThemeState.selectedPokemonType
     
     // 宝可梦类型选择按钮
     Button(
@@ -501,7 +501,7 @@ fun PokemonDynamicColorSwitch(
     modifier: Modifier = Modifier,
     onDynamicColorChanged: (Boolean) -> Unit = {}
 ) {
-    val useDynamicColors = PokemonThemeState.useDynamicColors.value
+    val useDynamicColors by PokemonThemeState.useDynamicColors
     
     Row(
         modifier = modifier,
@@ -535,7 +535,8 @@ fun PokemonEnhancedThemePreviewCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
-    val previewColor = if (pokemonType != null && PokemonThemeState.useDynamicColors.value) {
+    val useDynamicColors by PokemonThemeState.useDynamicColors
+    val previewColor = if (pokemonType != null && useDynamicColors) {
         getPokemonTypeColor(pokemonType, theme != PokemonThemeMode.DARK)
     } else {
         getThemePreviewColor(theme)
@@ -577,7 +578,7 @@ fun PokemonEnhancedThemePreviewCard(
             )
             
             // 宝可梦类型指示
-            if (pokemonType != null && PokemonThemeState.useDynamicColors.value) {
+            if (pokemonType != null && useDynamicColors) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = getPokemonTypeDisplayName(pokemonType),
@@ -646,6 +647,12 @@ fun PokemonThemeControlPanel(
                 PokemonThemeSwitcher(
                     onThemeChanged = onThemeChanged
                 )
+
+                Button(
+                    onClick = { showPanel = false }
+                ) {
+                    Text("关闭")
+                }
                 
                 // 当前主题预览
                 PokemonThemeIndicator()
