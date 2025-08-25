@@ -1,206 +1,218 @@
-# Pokemon Wiki - 口袋妖怪图鉴
+# Pokemon Wiki Android 项目
 
-[![Android](https://img.shields.io/badge/Android-API%2024+-brightgreen.svg)](https://developer.android.com/about/versions/android-7.0)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-blue.svg)](https://kotlinlang.org/)
-[![Compose](https://img.shields.io/badge/Jetpack%20Compose-1.6.0-orange.svg)](https://developer.android.com/jetpack/compose)
-[![Material3](https://img.shields.io/badge/Material%20Design%203-最新版本-purple.svg)](https://m3.material.io/)
+## 项目概述
 
-## 📱 项目概述
+Pokemon Wiki 是一个基于 Jetpack Compose 的 Android 应用，提供宝可梦图鉴功能和动态主题系统。项目采用现代化的 Android 开发架构，遵循单一责任原则和最佳实践。
 
-Pokemon Wiki 是一个专为口袋妖怪爱好者打造的现代化图鉴应用，采用最新的 Android 开发技术栈，提供流畅的用户体验和丰富的功能特性。
-
-### ✨ 核心特性
-
-- 🎨 **口袋妖怪主题设计** - 基于经典宝可梦元素的专属色彩方案
-- 🌓 **智能主题切换** - 支持亮色、暗色、跟随系统、自动切换四种模式
-- 📱 **现代化UI** - 基于 Jetpack Compose 和 Material Design 3
-- 🌐 **网络数据获取** - 实时获取最新的宝可梦信息
-- 💾 **本地缓存** - 使用 MMKV 进行高效数据存储
-- 🖼️ **图片加载** - 支持 GIF、SVG、Video 等多种格式
-- 📱 **响应式设计** - 适配各种屏幕尺寸和设备
-
-## 🏗️ 技术架构
+## 技术架构
 
 ### 核心技术栈
+- **UI框架**: Jetpack Compose + Material3
+- **语言**: Kotlin 2.0.21
+- **最低SDK**: API 24 (Android 7.0)
+- **目标SDK**: API 36 (Android 14)
+- **Java版本**: 11
+- **AGP版本**: 8.11.1
 
-| 技术 | 版本 | 说明 |
-|------|------|------|
-| **Android SDK** | API 24-36 | 支持 Android 7.0 及以上版本 |
-| **Kotlin** | 2.0.21 | 主要开发语言 |
-| **Jetpack Compose** | 1.6.0 | 现代化UI框架 |
-| **Material Design 3** | 最新版本 | 设计系统 |
-| **AGP** | 8.11.1 | Android Gradle Plugin |
+### 架构模式
+- **MVVM架构**: 使用 ViewModel 和 State 管理UI状态
+- **单一责任原则**: 每个类和文件都有明确的职责
+- **组件化设计**: UI组件按功能模块分离
+- **状态管理**: 使用 Compose State 进行响应式状态管理
 
-### 架构组件
+## 项目结构
 
 ```
 com.healthybear.pokemon.wiki/
-├── App.kt                    # 应用程序入口
-├── MainActivity.kt           # 主活动
-├── mmkv/                     # 数据存储
-├── network/                  # 网络层
-│   ├── constant/            # 网络常量
-│   ├── error/               # 错误处理
-│   ├── manager/             # 网络管理
-│   ├── repository/          # 数据仓库
-│   └── response/            # 响应模型
-└── ui/                      # 用户界面
-    └── theme/               # 主题相关
-        ├── Color.kt         # 核心色彩定义
-        ├── Theme.kt         # 主题配置和状态管理
-        ├── ThemeSwitcher.kt # 主题切换UI组件
-        ├── ThemeData.kt     # 主题相关数据结构
-        └── README.md        # 主题系统使用说明
+├── App.kt                           # 应用程序入口
+├── MainActivity.kt                  # 主活动
+├── mmkv/                           # 数据存储
+│   └── SessionStorage.kt          # 会话存储管理
+├── network/                        # 网络层
+│   ├── constant/                   # 网络常量
+│   ├── error/                      # 错误处理
+│   ├── manager/                    # 网络管理
+│   ├── repository/                 # 数据仓库
+│   └── response/                   # 响应模型
+└── ui/                            # 用户界面
+    ├── components/                 # UI组件
+    │   └── theme/                  # 主题相关组件
+    │       ├── CurrentThemeStatus.kt      # 当前主题状态显示
+    │       ├── PokemonDynamicColorSwitch.kt # 动态配色开关
+    │       ├── PokemonThemeControlPanel.kt  # 主题控制面板
+    │       ├── PokemonThemeSwitcher.kt      # 主题切换器
+    │       ├── PokemonTypeSelector.kt       # 宝可梦类型选择器
+    │       ├── SampleUIComponents.kt        # 示例UI组件
+    │       └── ThemePreviewCards.kt         # 主题预览卡片
+    └── theme/                      # 主题系统
+        ├── Color.kt                # 颜色定义
+        ├── ColorUtils.kt           # 颜色工具类
+        ├── DynamicColorGenerator.kt # 动态配色生成器
+        ├── Theme.kt                # 主题组合函数
+        ├── ThemeData.kt            # 主题数据结构
+        ├── ThemeStateManager.kt    # 主题状态管理
+        └── Type.kt                 # 类型定义
 ```
 
-### 网络架构
+## 核心功能
 
-- **HTTP客户端**: Retrofit 3.0.0 + OkHttp 5.0.0
-- **数据序列化**: Moshi (JSON)
-- **网络拦截器**: OkHttp Logging Interceptor
-- **错误处理**: 自定义异常处理机制
+### 1. 动态主题系统
+- **多主题支持**: 亮色、暗色、系统跟随、自动切换
+- **宝可梦类型配色**: 根据选择的宝可梦类型自动生成配色方案
+- **动态配色**: 支持 Android 12+ 的动态配色和自定义宝可梦配色
+- **实时预览**: 提供主题和配色的实时预览功能
 
-### 数据存储
+### 2. 宝可梦类型系统
+- **18种类型**: 火、水、草、电、冰、格斗、毒、地面、飞行、超能、虫、岩石、幽灵、钢、妖精、龙、恶、一般
+- **智能配色**: 每种类型都有对应的主色调和变体色
+- **HSL色彩科学**: 使用HSL色彩空间进行智能色彩搭配
 
-- **键值存储**: MMKV (腾讯开源)
-- **会话管理**: 自定义 SessionStorage
+### 3. 组件化UI设计
+- **模块化组件**: 每个UI功能都有独立的组件文件
+- **可复用性**: 组件设计遵循可复用原则
+- **响应式设计**: 支持不同屏幕尺寸和方向
 
-### 图片加载
+## 开发规范
 
-- **主要**: Coil 2.7.0
-- **支持格式**: GIF, SVG, Video
-- **备选**: Glide 4.16.0
+### 代码组织原则
+1. **单一责任原则**: 每个类和方法只负责一个功能
+2. **包结构清晰**: 按功能模块组织包结构
+3. **命名规范**: 使用描述性的类名和方法名
+4. **文档完整**: 每个公共API都有完整的文档注释
 
-## 🎨 主题系统
+### 文件命名规范
+- **类名**: PascalCase (如: `PokemonThemeSwitcher`)
+- **文件名**: 与类名保持一致
+- **包名**: 全小写，点分隔
+- **常量**: UPPER_SNAKE_CASE
 
-### 口袋妖怪主题色彩
+### 组件设计原则
+- **职责单一**: 每个组件只负责一个UI功能
+- **参数明确**: 组件参数使用有意义的名称
+- **状态管理**: 使用 Compose State 管理组件状态
+- **可测试性**: 组件设计便于单元测试
 
-项目采用专门设计的口袋妖怪主题色彩系统，包括：
-
-- **核心色彩**: 皮卡丘金、妙蛙绿、小火龙橙等
-- **类型色彩**: 18种宝可梦类型专用色彩
-- **状态色彩**: 成功、警告、错误等状态指示色彩
-- **渐变色彩**: 多种主题渐变效果
-
-### 主题模式
-
-- **LIGHT**: 亮色主题
-- **DARK**: 暗色主题  
-- **SYSTEM**: 跟随系统设置
-- **AUTO**: 自动切换
-
-### 🚀 动态配色系统
-
-项目实现了基于 Material Design 3 的智能动态配色系统：
-
-- **🎨 智能配色生成**: 根据用户选择的宝可梦类型自动生成完整配色方案
-- **🌓 主题模式支持**: 支持亮色/暗色主题切换，兼容 Android 12+ 系统动态配色
-- **🔄 动态配色优先级**: 宝可梦动态配色 > 系统动态配色 > 静态配色回退
-- **📱 完整UI组件**: 提供主题切换器、类型选择器、控制面板等完整组件
-
-详细的主题系统使用说明请参考：[主题系统使用指南](app/src/main/java/com/healthybear/pokemon/wiki/ui/theme/README.md)
-
-动态配色系统详细说明请参考：[动态配色系统使用指南](app/src/main/java/com/healthybear/pokemon/wiki/ui/theme/DynamicTheme_README.md)
-
-## 🚀 快速开始
+## 快速开始
 
 ### 环境要求
-
 - Android Studio Hedgehog | 2023.1.1 或更高版本
-- Android SDK API 36
-- JDK 11
-- Gradle 8.0+
+- JDK 11 或更高版本
+- Android SDK API 24-36
 
-### 安装步骤
+### 构建步骤
+1. 克隆项目到本地
+2. 在 Android Studio 中打开项目
+3. 同步 Gradle 依赖
+4. 运行应用到设备或模拟器
 
-1. **克隆项目**
-   ```bash
-   git clone [项目地址]
-   cd Pokemon-Wiki
-   ```
+### 运行命令
+```bash
+# 构建项目
+./gradlew build
 
-2. **打开项目**
-   - 使用 Android Studio 打开项目
-   - 等待 Gradle 同步完成
+# 安装到设备
+./gradlew installDebug
 
-3. **运行应用**
-   - 连接 Android 设备或启动模拟器
-   - 点击运行按钮
+# 运行测试
+./gradlew test
+```
 
-### 构建配置
+## 主题系统使用
 
-- **调试版本**: `./gradlew assembleDebug`
-- **发布版本**: `./gradlew assembleRelease`
-- **测试**: `./gradlew test`
+### 基本主题切换
+```kotlin
+// 切换到亮色主题
+PokemonThemeState.setTheme(PokemonThemeMode.LIGHT)
 
-## 📚 开发指南
+// 切换到暗色主题
+PokemonThemeState.setTheme(PokemonThemeMode.DARK)
 
-### 代码规范
+// 跟随系统设置
+PokemonThemeState.setTheme(PokemonThemeMode.SYSTEM)
+```
 
-- **语言**: 优先使用 Kotlin
-- **UI框架**: 使用 Jetpack Compose
-- **架构模式**: 遵循 MVVM 架构
-- **命名规范**: 遵循 Android 官方命名约定
+### 宝可梦类型选择
+```kotlin
+// 选择火系宝可梦类型
+PokemonThemeState.setPokemonType("fire")
 
-### 主题开发
+// 启用动态配色
+PokemonThemeState.setUseDynamicColors(true)
+```
 
-- **色彩定义**: 在 `Color.kt` 中定义新色彩
-- **主题配置**: 在 `Theme.kt` 中配置主题
-- **组件开发**: 使用 `ThemeSwitcher.kt` 中的组件
-- **数据结构**: 在 `ThemeData.kt` 中定义数据结构
+### 自定义组件使用
+```kotlin
+// 使用主题切换器
+PokemonThemeSwitcher(
+    onThemeChanged = { theme ->
+        // 处理主题变化
+    }
+)
 
-### 网络开发
+// 使用类型选择器
+PokemonTypeSelector(
+    onPokemonTypeSelected = { type ->
+        // 处理类型选择
+    }
+)
+```
 
-- **API接口**: 在 `network/repository` 中定义
-- **数据模型**: 在 `network/response` 中定义
-- **错误处理**: 使用自定义异常处理机制
+## 测试
 
-## 📖 文档导航
+### 测试策略
+- **单元测试**: 使用 JUnit 4 测试业务逻辑
+- **UI测试**: 使用 Compose Testing 测试UI组件
+- **集成测试**: 测试组件间的交互
 
-### 核心文档
+### 测试覆盖率目标
+- 代码覆盖率 > 80%
+- 关键业务逻辑 100% 覆盖
+- UI组件交互测试完整
 
-- [主题系统使用指南](app/src/main/java/com/healthybear/pokemon/wiki/ui/theme/README.md) - 口袋妖怪主题系统的详细使用说明
+## 性能优化
 
-### 技术文档
+### 内存管理
+- 使用 MMKV 进行高效数据存储
+- 及时释放不需要的资源
+- 避免内存泄漏
 
-- [项目规则](.cursorrules) - 项目开发规则和规范
-- [构建配置](build.gradle.kts) - 项目构建配置
-- [应用配置](app/build.gradle.kts) - 应用模块配置
-- [版本管理](gradle/libs.versions.toml) - 依赖版本管理
+### UI性能
+- 使用 Compose 进行声明式UI开发
+- 避免过度绘制
+- 使用 LazyColumn 等懒加载组件
 
-### 代码文档
+### 网络优化
+- 使用 Retrofit 进行网络请求
+- 实现请求拦截器和响应缓存
+- 错误重试机制
 
-- [应用入口](app/src/main/java/com/healthybear/pokemon/wiki/App.kt) - 应用程序入口点
-- [主活动](app/src/main/java/com/healthybear/pokemon/wiki/MainActivity.kt) - 主活动实现
-- [主题色彩](app/src/main/java/com/healthybear/pokemon/wiki/ui/theme/Color.kt) - 主题色彩定义
-- [主题配置](app/src/main/java/com/healthybear/pokemon/wiki/ui/theme/Theme.kt) - 主题配置和状态管理
+## 贡献指南
 
-## 🤝 贡献指南
+### 代码提交规范
+- 提交信息格式: `type: description`
+- 类型包括: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
-### 开发流程
-
-1. Fork 项目
-2. 创建功能分支
-3. 提交代码
-4. 创建 Pull Request
-
-### 代码审查
-
-- 遵循项目代码规范
-- 确保代码质量
-- 添加必要的测试
+### 代码审查要求
+- 遵循项目命名规范
+- 确保错误处理机制完善
+- 添加必要的单元测试
 - 更新相关文档
 
-## 📄 许可证
+## 许可证
 
-本项目采用 [MIT 许可证](LICENSE)。
+本项目采用 Apache License 2.0 许可证。
 
-## 📞 联系我们
+## 联系方式
 
-- **项目维护者**: HealthyBear Team
-- **邮箱**: [联系邮箱]
-- **项目地址**: [项目地址]
+如有问题或建议，请通过以下方式联系：
+- 项目Issues: [GitHub Issues](https://github.com/your-repo/issues)
+- 邮箱: your-email@example.com
 
----
+## 更新日志
 
-⭐ 如果这个项目对您有帮助，请给我们一个星标！
+### v1.0.0 (2024-01-XX)
+- 🎉 初始版本发布
+- ✨ 实现动态主题系统
+- ✨ 支持18种宝可梦类型配色
+- ✨ 组件化UI设计
+- ✨ 完整的主题预览功能

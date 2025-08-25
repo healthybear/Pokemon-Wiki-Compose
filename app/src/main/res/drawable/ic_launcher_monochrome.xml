@@ -1,39 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- 皮卡丘图标 -->
+    <!-- 皮卡丘单色图标 -->
     <path
-        android:fillColor="#FFEB3B"
+        android:fillColor="#FF000000"
         android:pathData="M54,24C68.36,24 80,35.64 80,50C80,64.36 68.36,76 54,76C39.64,76 28,64.36 28,50C28,35.64 39.64,24 54,24Z" />
     <!-- 耳朵 -->
     <path
-        android:fillColor="#FFEB3B"
+        android:fillColor="#FF000000"
         android:pathData="M40,32L44,18L48,32Z" />
     <path
-        android:fillColor="#FFEB3B"
+        android:fillColor="#FF000000"
         android:pathData="M68,32L64,18L60,32Z" />
     <!-- 眼睛 -->
     <path
-        android:fillColor="#000000"
+        android:fillColor="#FF000000"
         android:pathData="M44,42C46.21,42 48,40.21 48,38C48,35.79 46.21,34 44,34C41.79,34 40,35.79 40,38C40,40.21 41.79,42 44,42Z" />
     <path
-        android:fillColor="#000000"
+        android:fillColor="#FF000000"
         android:pathData="M64,42C66.21,42 68,40.21 68,38C68,35.79 66.21,34 64,34C61.79,34 60,35.79 60,38C60,40.21 61.79,42 64,42Z" />
     <!-- 鼻子 -->
     <path
-        android:fillColor="#000000"
+        android:fillColor="#FF000000"
         android:pathData="M52,46C53.1,46 54,45.1 54,44C54,42.9 53.1,42 52,42C50.9,42 50,42.9 50,44C50,45.1 50.9,46 52,46Z" />
     <!-- 嘴巴 -->
     <path
-        android:fillColor="#000000"
+        android:fillColor="#FF000000"
         android:pathData="M48,50C48,50 52,54 56,50" />
     <!-- 脸颊 -->
     <path
-        android:fillColor="#FF5722"
+        android:fillColor="#FF000000"
         android:pathData="M38,52C40.21,52 42,50.21 42,48C42,45.79 40.21,44 38,44C35.79,44 34,45.79 34,48C34,50.21 35.79,52 38,52Z" />
     <path
-        android:fillColor="#FF5722"
+        android:fillColor="#FF000000"
         android:pathData="M70,52C72.21,52 74,50.21 74,48C74,45.79 72.21,44 70,44C67.79,44 66,45.79 66,48C66,50.21 67.79,52 70,52Z" />
 </vector>

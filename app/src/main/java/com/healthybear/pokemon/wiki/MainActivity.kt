@@ -1,280 +1,120 @@
 package com.healthybear.pokemon.wiki
 
+import android.graphics.drawable.Icon
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.healthybear.pokemon.wiki.ui.theme.*
+import com.healthybear.pokemon.wiki.ui.components.AppTopBarWithDrawer
+import com.healthybear.pokemon.wiki.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PokemonWiki_ComposeTheme {
-                PokemonThemeDemo()
+            AppTheme {
+                PokemonWikiApp()
             }
         }
     }
 }
 
-@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PokemonThemeDemo() {
-    var showThemePanel by remember { mutableStateOf(false) }
-    
-    // 获取当前颜色方案
-    val colorScheme = MaterialTheme.colorScheme
-    
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            TopAppBar(
-                title = { Text("🎨 宝可梦动态主题演示") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorScheme.primary,
-                    titleContentColor = colorScheme.onPrimary
+fun PokemonWikiApp() {
+    AppTopBarWithDrawer(
+        title = "Pokemon Wiki",
+        actions = {
+            // 搜索按钮
+            IconButton(onClick = { /* TODO: 实现搜索功能 */ }) {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "搜索",
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
-            )
-        },
-        floatingActionButton = {
-            PokemonThemeControlPanel(
-                onThemeChanged = { theme ->
-                    PokemonThemeState.setTheme(theme)
-                },
-                onPokemonTypeChanged = { type ->
-                    PokemonThemeState.setPokemonType(type)
-                },
-                onDynamicColorChanged = { use ->
-                    PokemonThemeState.setUseDynamicColors(use)
-                }
-            )
+            }
+            // 设置按钮
+            IconButton(onClick = { /* TODO: 打开设置页面 */ }) {
+                Icon(
+                    imageVector = Icons.Filled.Settings,
+                    contentDescription = "设置",
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
         }
-    ) { innerPadding ->
+    ) {
+        // 主要内容区域
+        MainContent()
+    }
+}
+
+@Composable
+private fun MainContent() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // 当前主题状态显示
-            CurrentThemeStatus()
-            
-            // 宝可梦类型选择器
-            PokemonTypeSelector(
-                onPokemonTypeSelected = { type ->
-                    PokemonThemeState.setPokemonType(type)
-                }
-            )
-            
-            // 动态配色开关
-            PokemonDynamicColorSwitch(
-                onDynamicColorChanged = { use ->
-                    PokemonThemeState.setUseDynamicColors(use)
-                }
-            )
-            
-            // 主题模式选择器
-            PokemonThemeSwitcher(
-                onThemeChanged = { theme ->
-                    PokemonThemeState.setTheme(theme)
-                }
-            )
-            
-            // 主题预览卡片
-            ThemePreviewCards()
-            
-            // 示例UI组件展示
-            SampleUIComponents()
-        }
-    }
-}
-
-@Composable
-fun CurrentThemeStatus() {
-    val currentTheme = rememberPokemonTheme()
-    val selectedType by PokemonThemeState.selectedPokemonType
-    val useDynamicColors by PokemonThemeState.useDynamicColors
-    
-    // 获取当前颜色方案
-    val colorScheme = MaterialTheme.colorScheme
-    
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = colorScheme.surfaceVariant
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
             Text(
-                text = "当前主题状态",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                text = "欢迎来到 Pokemon Wiki",
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
             
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("主题模式:")
-                Text(
-                    text = when (currentTheme) {
-                        PokemonThemeMode.LIGHT -> "☀️ 亮色"
-                        PokemonThemeMode.DARK -> "🌙 暗色"
-                        PokemonThemeMode.SYSTEM -> "⚙️ 系统"
-                        PokemonThemeMode.AUTO -> "🔄 自动"
-                    },
-                    fontWeight = FontWeight.Medium
-                )
-            }
+            Text(
+                text = "点击左上角菜单按钮打开侧边菜单",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
             
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("宝可梦类型:")
-                Text(
-                    text = selectedType?.let { type -> "🎯 ${getPokemonTypeDisplayName(type)}" } ?: "未选择",
-                    fontWeight = FontWeight.Medium
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer
                 )
-            }
-            
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("动态配色:")
-                Text(
-                    text = if (useDynamicColors) "✅ 开启" else "❌ 关闭",
-                    fontWeight = FontWeight.Medium
-                )
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = "功能特性",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "• Material3 设计风格\n• 响应式侧边菜单\n• 动态主题系统\n• 宝可梦类型配色",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
         }
     }
 }
 
+@Preview(name = "Pokemon Wiki App")
 @Composable
-fun ThemePreviewCards() {
-    val selectedType by PokemonThemeState.selectedPokemonType
-    
-    Text(
-        text = "主题预览",
-        style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.Bold
-    )
-    
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        PokemonEnhancedThemePreviewCard(
-            theme = PokemonThemeMode.LIGHT,
-            pokemonType = selectedType,
-            modifier = Modifier.weight(1f)
-        )
-        
-        PokemonEnhancedThemePreviewCard(
-            theme = PokemonThemeMode.DARK,
-            pokemonType = selectedType,
-            modifier = Modifier.weight(1f)
-        )
-    }
-}
-
-@Composable
-fun SampleUIComponents() {
-    Text(
-        text = "示例UI组件",
-        style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.Bold
-    )
-    
-    // 获取当前颜色方案
-    val colorScheme = MaterialTheme.colorScheme
-    
-    Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        // 按钮示例
-        Button(
-            onClick = { },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("主要按钮")
-        }
-        
-        OutlinedButton(
-            onClick = { },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("轮廓按钮")
-        }
-        
-        TextButton(
-            onClick = { },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("文本按钮")
-        }
-        
-        // 卡片示例
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = colorScheme.surface
-            )
-        ) {
-            Column(
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(
-                    text = "示例卡片",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "这是一个使用当前主题配色的示例卡片，展示了动态配色方案的效果。",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        }
-        
-        // 输入框示例
-        OutlinedTextField(
-            value = "",
-            onValueChange = { },
-            label = { Text("示例输入框") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        
-        // 开关示例
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("示例开关")
-            Switch(
-                checked = false,
-                onCheckedChange = { }
-            )
-        }
+private fun PokemonWikiAppPreview() {
+    AppTheme {
+        PokemonWikiApp()
     }
 }
