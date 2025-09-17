@@ -1,6 +1,5 @@
-package com.healthybear.pokemon.wiki
+package com.healthybear.pokemon.wiki.ui.main
 
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,16 +14,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.healthybear.pokemon.wiki.base.BaseActivity
 import com.healthybear.pokemon.wiki.ui.components.AppTopBarWithDrawer
+import com.healthybear.pokemon.wiki.ui.components.DynamicLiewView
+import com.healthybear.pokemon.wiki.ui.components.TwoColumnListExampleScreen
 import com.healthybear.pokemon.wiki.ui.theme.AppTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : BaseActivity() {
+    val mMainViewModel by lazy { MainViewModel() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AppTheme {
-                PokemonWikiApp()
+                // 方法1: 传递Activity中的ViewModel实例
+                PokemonWikiApp(viewModel = mMainViewModel)
             }
         }
     }
@@ -32,7 +38,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PokemonWikiApp() {
+fun PokemonWikiApp(viewModel: MainViewModel) {
     AppTopBarWithDrawer(
         title = "Pokemon Wiki",
         actions = {
@@ -55,66 +61,36 @@ fun PokemonWikiApp() {
         }
     ) {
         // 主要内容区域
-        MainContent()
+        MainContent(viewModel = viewModel)
     }
 }
 
 @Composable
-private fun MainContent() {
+private fun MainContent(viewModel: MainViewModel) {
+    // 展示两列布局的示例
+    TwoColumnListExampleScreen()
+    
+    // 原来的单列布局（注释掉）
+    /*
+    val testList = viewModel.getTestList()
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text(
-                text = "欢迎来到 Pokemon Wiki",
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            
-            Text(
-                text = "点击左上角菜单按钮打开侧边菜单",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Text(
-                        text = "功能特性",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "• Material3 设计风格\n• 响应式侧边菜单\n• 动态主题系统\n• 宝可梦类型配色",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-        }
+        DynamicLiewView(
+            items = testList
+        )
     }
+    */
 }
 
 @Preview(name = "Pokemon Wiki App")
 @Composable
 private fun PokemonWikiAppPreview() {
+    val thiViewModel: MainViewModel = viewModel()
     AppTheme {
-        PokemonWikiApp()
+        PokemonWikiApp(viewModel = thiViewModel)
     }
 }
