@@ -8,7 +8,7 @@ package com.healthybear.library.network.constant
 /**
  * base_url
  */
-const val BASE_URL = "https://gitee.com/"
+const val BASE_URL = "https://pokeapi.co/api/v2"
 
 const val KEY_TOKEN = "token"
 const val KEY_COOKIE = "Cookie"

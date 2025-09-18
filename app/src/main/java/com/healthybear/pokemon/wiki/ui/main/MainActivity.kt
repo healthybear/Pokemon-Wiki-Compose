@@ -32,6 +32,11 @@ class MainActivity : BaseActivity() {
                 PokemonWikiApp(viewModel = mMainViewModel)
             }
         }
+        initData()
+    }
+
+    private fun initData() {
+        mMainViewModel.getPokemonList()
     }
 }
 

@@ -1,6 +1,7 @@
 package com.healthybear.pokemon.wiki.ui.main
 
 import com.healthybear.pokemon.wiki.base.BaseViewModel
+import com.healthybear.pokemon.wiki.network.response.PokemonResponse
 import com.healthybear.pokemon.wiki.ui.components.SampleItem
 
 /**
@@ -9,6 +10,9 @@ import com.healthybear.pokemon.wiki.ui.components.SampleItem
  * @description
  */
 class MainViewModel: BaseViewModel() {
+
+    private val pokemonResponse = PokemonResponse()
+
     fun getTest(): String {
         return "test"
     }
@@ -21,5 +25,9 @@ class MainViewModel: BaseViewModel() {
             SampleItem("tes4", "cstes2"),
             SampleItem("tes5", "cstes2")
         )
+    }
+
+    fun getPokemonList() {
+        TODO("Not yet implemented")
     }
 }
