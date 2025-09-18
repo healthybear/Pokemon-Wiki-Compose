@@ -18,7 +18,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.healthybear.pokemon.wiki.base.BaseActivity
 import com.healthybear.pokemon.wiki.ui.components.AppTopBarWithDrawer
 import com.healthybear.pokemon.wiki.ui.components.DynamicLiewView
-import com.healthybear.pokemon.wiki.ui.components.TwoColumnListExampleScreen
 import com.healthybear.pokemon.wiki.ui.theme.AppTheme
 
 class MainActivity : BaseActivity() {
@@ -67,11 +66,6 @@ fun PokemonWikiApp(viewModel: MainViewModel) {
 
 @Composable
 private fun MainContent(viewModel: MainViewModel) {
-    // 展示两列布局的示例
-    TwoColumnListExampleScreen()
-    
-    // 原来的单列布局（注释掉）
-    /*
     val testList = viewModel.getTestList()
     Box(
         modifier = Modifier
@@ -83,7 +77,6 @@ private fun MainContent(viewModel: MainViewModel) {
             items = testList
         )
     }
-    */
 }
 
 @Preview(name = "Pokemon Wiki App")
