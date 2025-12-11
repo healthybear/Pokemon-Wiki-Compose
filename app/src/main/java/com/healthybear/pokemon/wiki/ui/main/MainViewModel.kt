@@ -11,23 +11,6 @@ import com.healthybear.pokemon.wiki.ui.components.SampleItem
  */
 class MainViewModel: BaseViewModel() {
 
-    private val pokemonResponse = PokemonResponse()
 
-    fun getTest(): String {
-        return "test"
-    }
 
-    fun getTestList(): List<SampleItem> {
-        return listOf(
-            SampleItem("tes1", "cstes1"),
-            SampleItem("tes2", "cstes2"),
-            SampleItem("tes3", "cstes2"),
-            SampleItem("tes4", "cstes2"),
-            SampleItem("tes5", "cstes2")
-        )
-    }
-
-    fun getPokemonList() {
-        TODO("Not yet implemented")
-    }
 }

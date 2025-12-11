@@ -1,5 +1,6 @@
 package com.healthybear.pokemon.wiki.network.manager
 
+import com.blankj.utilcode.BuildConfig
 import com.healthybear.library.network.constant.BASE_URL
 import com.healthybear.pokemon.wiki.network.retrofit.PokemonApi
 import com.squareup.moshi.Moshi
@@ -90,7 +91,7 @@ object RetrofitManager {
      * 使用示例：val pokemonApi = RetrofitManager.getApiService<PokemonApi>()
      * @return API接口实现
      */
-    inline fun <reified T> getApiService(): T = retrofit.create(T::class.java)
+    private inline fun <reified T> getApiService(): T = retrofit.create(T::class.java)
     
     /**
      * 获取Retrofit实例（用于高级配置或测试）
@@ -102,5 +103,5 @@ object RetrofitManager {
      * 获取OkHttpClient实例（用于高级配置或测试）
      * @return OkHttpClient实例
      */
-    fun getOkHttpClient(): OkHttpClient = okHttpClient
+    fun provideOkHttpClient(): OkHttpClient = okHttpClient
 }

@@ -36,7 +36,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initData() {
-        mMainViewModel.getPokemonList()
+//        mMainViewModel.getPokemonList()
     }
 }
 
@@ -71,17 +71,6 @@ fun PokemonWikiApp(viewModel: MainViewModel) {
 
 @Composable
 private fun MainContent(viewModel: MainViewModel) {
-    val testList = viewModel.getTestList()
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        DynamicLiewView(
-            items = testList
-        )
-    }
 }
 
 @Preview(name = "Pokemon Wiki App")
